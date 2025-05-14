@@ -8,4 +8,6 @@ Additional Documents:-
 
 [Database Schema](https://github.com/santhosh-arumugam/order-service/blob/master/docs/Database_Schema.md)
 
+[ER Diagram](https://github.com/santhosh-arumugam/order-service/blob/master/docs/ERD_Diagram.png)
+
 [Service Functionalities](https://github.com/santhosh-arumugam/order-service/blob/master/docs/OrderService_Functionalities.md)
