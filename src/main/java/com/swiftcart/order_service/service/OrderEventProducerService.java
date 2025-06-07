@@ -11,18 +11,18 @@ import org.springframework.stereotype.Service;
 public class OrderEventProducerService {
 
     private final KafkaTemplate<String, String> kafkaTemplate;
+    private final ObjectMapper objectMapper;
 
-    public OrderEventProducerService(KafkaTemplate<String, String> kafkaTemplate) {
+    public OrderEventProducerService(KafkaTemplate<String, String> kafkaTemplate, ObjectMapper objectMapper) {
         this.kafkaTemplate = kafkaTemplate;
+        this.objectMapper = objectMapper;
     }
 
     @Value("${order.topic.name:orders}")
     private String topicName;
 
     public void publishOrderCreatedEvent(OrderCreatedEvent event) throws JsonProcessingException {
-        ObjectMapper objectMapper = new ObjectMapper();
         String eventJson = objectMapper.writeValueAsString(event);
-
         kafkaTemplate.send(topicName, String.valueOf(event.getOrderId()), eventJson);
         System.out.println("Published OrderCreated Event to Kafka: " + eventJson);
     }

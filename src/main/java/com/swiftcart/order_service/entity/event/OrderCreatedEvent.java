@@ -1,7 +1,6 @@
 package com.swiftcart.order_service.entity.event;
 
 import com.swiftcart.order_service.entity.OrderItem;
-import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,7 +12,6 @@ import java.util.List;
 
 @Getter
 @Setter
-@Entity
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrderCreatedEvent {

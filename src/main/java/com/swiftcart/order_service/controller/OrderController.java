@@ -4,9 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.swiftcart.order_service.dto.CreateOrderDTO;
 import com.swiftcart.order_service.dto.OrderResponseDTO;
 import com.swiftcart.order_service.entity.Order;
-import com.swiftcart.order_service.entity.event.OrderCreatedEvent;
 import com.swiftcart.order_service.mapper.OrderMapper;
-import com.swiftcart.order_service.service.OrderEventProducerService;
 import com.swiftcart.order_service.service.OrderService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,13 +20,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class OrderController {
 
     private final OrderService orderService;
-    private final OrderEventProducerService orderEventProducerService;
     private final OrderMapper orderMapper;
 
     @Autowired
-    public OrderController(OrderService orderService, OrderEventProducerService orderEventProducerService, OrderMapper orderMapper) {
+    public OrderController(OrderService orderService, OrderMapper orderMapper) {
         this.orderService = orderService;
-        this.orderEventProducerService = orderEventProducerService;
         this.orderMapper = orderMapper;
     }
 
@@ -36,8 +32,6 @@ public class OrderController {
     public ResponseEntity<OrderResponseDTO> createOrder(@RequestBody @Valid CreateOrderDTO dto) throws JsonProcessingException {
        Order savedOrder = orderService.createOrder(orderMapper.toEntity(dto));
        OrderResponseDTO response = orderMapper.toResponseDto(savedOrder);
-       OrderCreatedEvent orderCreatedEvent1 = orderMapper.toOrderEvent(savedOrder);
-       orderEventProducerService.publishOrderCreatedEvent(orderCreatedEvent1);
        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 }
