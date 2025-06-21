@@ -30,8 +30,9 @@ public class OrderController {
 
     @PostMapping
     public ResponseEntity<OrderResponseDTO> createOrder(@RequestBody @Valid CreateOrderDTO dto) throws JsonProcessingException {
-       Order savedOrder = orderService.createOrder(orderMapper.toEntity(dto));
-       OrderResponseDTO response = orderMapper.toResponseDto(savedOrder);
-       return new ResponseEntity<>(response, HttpStatus.CREATED);
+//        Order orderEntity = orderMapper.toEntity(dto);
+        Order savedOrder = orderService.createOrder(orderMapper.toEntity(dto));
+        OrderResponseDTO response = orderMapper.toResponseDto(savedOrder);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 }

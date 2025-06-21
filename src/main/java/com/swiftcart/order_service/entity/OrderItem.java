@@ -1,5 +1,6 @@
 package com.swiftcart.order_service.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,13 +19,15 @@ public class OrderItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long orderItemId;
 
-    @ManyToOne
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "orderId", nullable = false)
     private Order order;
 
     @Column(nullable = false)
     private Long productId;
 
+    @Column(nullable = false)
     private Integer quantity;
 
     @Column(precision = 10, scale = 2, nullable = false)

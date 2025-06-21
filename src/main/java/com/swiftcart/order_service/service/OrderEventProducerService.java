@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 public class OrderEventProducerService {
 
@@ -18,12 +20,14 @@ public class OrderEventProducerService {
         this.objectMapper = objectMapper;
     }
 
-    @Value("${order.topic.name:orders}")
+    @Value("${order.topic.name:orders-events}")
     private String topicName;
 
     public void publishOrderCreatedEvent(OrderCreatedEvent event) throws JsonProcessingException {
+        event.setEventType("ORDER_CREATED");
+        event.setRequestId(UUID.randomUUID().toString());
         String eventJson = objectMapper.writeValueAsString(event);
-        kafkaTemplate.send(topicName, String.valueOf(event.getOrderId()), eventJson);
+        kafkaTemplate.send(topicName, event.getRequestId(), eventJson);
         System.out.println("Published OrderCreated Event to Kafka: " + eventJson);
     }
 }

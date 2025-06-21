@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Map;
 
 @Getter
@@ -23,11 +24,15 @@ public class CreateOrderDTO {
     @Positive(message = "Total Amount should be positive")
     private BigDecimal totalAmount;
 
+    @NotNull(message = "Order Status should not be null")
     private OrderStatus orderStatus;
 
+    @NotNull(message = "Shipping Address should not be null")
     private Map<String, Object> shippingAddress;
 
-    @NotNull
+    @NotNull(message = "Payment status should not be null")
     private PaymentStatus paymentStatus;
 
+    @NotNull(message = "Order Items should not be null")
+    private List<OrderItemDTO> orderItems;
 }

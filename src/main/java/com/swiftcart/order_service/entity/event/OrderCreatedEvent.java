@@ -15,10 +15,12 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrderCreatedEvent {
+    private String eventType;
+    private String requestId;
     private Long orderId;
     private Long customerId;
-    private List<OrderItem> items;
+    private List<OrderItem> orderItems;
     private BigDecimal totalAmount;
     private LocalDateTime orderDateTime;
-    private String status;
+    private String orderStatus;
 }
