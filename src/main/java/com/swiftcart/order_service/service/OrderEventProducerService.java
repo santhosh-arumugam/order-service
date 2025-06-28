@@ -20,7 +20,7 @@ public class OrderEventProducerService {
         this.objectMapper = objectMapper;
     }
 
-    @Value("${order.topic.name:orders-events}")
+    @Value("${order.topic.name:order-events}")
     private String topicName;
 
     public void publishOrderCreatedEvent(OrderCreatedEvent event) throws JsonProcessingException {
